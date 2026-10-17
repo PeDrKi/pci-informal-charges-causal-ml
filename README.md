@@ -21,18 +21,19 @@ Các script `00`–`12` là bản gốc (suy luận **không** theo cụm tỉnh
 | `14b_bootstrap_cate_B1000.R` | bootstrap CATE B = 1.000, dải sup-t | Mục 4.4 |
 | `15_interaction_period.R` | kiểm định trực tiếp chênh lệch giữa hai giai đoạn | Mục 4.5 |
 | `02c.R`, `03c.R`, `10c.R`, `11c.R` | biến thể có `clusters` của 02, 03, 10, 11 (CF tiêu chuẩn, treatment CSTP3, FE-Causal Forest theo vùng, minh họa quy mô) | Mục 4.2, 4.4, 4.5 |
-| `16_panel_fe_clustered_tables.R` | Bảng 4 đầy đủ và Bảng 7 (Panel FE) | Bảng 4, 7 |
-| `17_wild_bootstrap_cre_dml.R` | wild cluster bootstrap-t (B = 9.999) và CRE-DML | Bảng 7, 8 |
-| `18_monte_carlo.R` | Monte Carlo 200 lần lặp (biến `MC_REPS`; ~15 phút/2 lõi) | Bảng 9 |
+| `16_panel_fe_clustered_tables.R` | Bảng 4 đầy đủ và Bảng 7 (Panel FE) | Bảng 3; độ vững Panel FE trong Mục 4.5 |
+| `17_wild_bootstrap_cre_dml.R` | wild cluster bootstrap-t (B = 9.999) và CRE-DML | Mục 4.1, 4.5 |
+| `18_monte_carlo.R` | Monte Carlo 200 lần lặp (biến `MC_REPS`; ~15 phút/2 lõi) | Mục 4.5 (văn bản) |
+| `19_extract_indicators.py` | trích 9 chỉ tiêu CSTP5 chung cả 7 năm từ sheet "Chi phí không chính thức" (cần file Excel PCI; kết quả: `data_processed/panel_with_indicators.csv`) | Bảng 5 |
+| `20_harmonized_lagged.R` | Panel FE với CSTP5 hài hòa và CSTP5 trễ một năm (wild bootstrap B = 4.999) | Bảng 5 |
 | `01`, `04`–`07`, `08`–`09`, `12` | bản gốc không theo cụm (Panel FE đầy đủ hệ số, loại HN/HCM, LOPO, cluster bootstrap, Oster δ, FE-DML gốc, bootstrap B = 200) | tham khảo |
 
-`16_panel_fe_clustered_tables.R` tái tạo Bảng 4 (Panel FE đầy đủ, SE theo cụm tỉnh) và Bảng 7 (loại HN/HCM, LOPO, cluster bootstrap B = 500, Oster δ); kết quả khớp bài (`results/out16.txt`).
+`16_panel_fe_clustered_tables.R` tái tạo Bảng 3 (Panel FE đầy đủ, SE theo cụm tỉnh) và các kiểm định độ vững ở Mục 4.5 (loại HN/HCM, LOPO, cluster bootstrap B = 500, Oster δ); kết quả khớp bài (`results/out16.txt`).
 
-`results/out13.txt`, `out14a.txt`, `out14b.txt`, `out16.txt`, `out17.txt`, `out18.txt` và `bootstrap_cate_ci_B1000.csv` là kết quả chạy đã dùng trong bài.
+`results/out13.txt`, `out14a.txt`, `out14b.txt`, `out16.txt`, `out17.txt`, `out18.txt`, `out20.txt` và `bootstrap_cate_ci_B1000.csv` là kết quả chạy đã dùng trong bài.
 
 ## Seed và thời gian chạy
 Cấu hình chính: seed 42 cho chia fold và rừng (13, 14a); 14a lặp 20 seed (1–20) để báo cáo độ ổn định; 14b dùng seed 20260101. Ước lượng điểm của rừng thay đổi nhẹ giữa các lần chạy/máy (ví dụ 0,0255 ở bản 13 và 0,0257 ở 14a); bài dùng 14a làm cấu hình chính cho FE-DML. 14a ~8 phút, 14b ~15–20 phút trên 2 lõi.
 
 ## Hạn chế đã biết
 FE-DML dùng khử hiệu ứng cố định thủ công, chưa phải thủ tục DML-panel đầy đủ (Clarke & Polselli, 2026); Monte Carlo chỉ dùng một thiết kế hiệu ứng cố định cộng gộp do tác giả chọn, không phải chứng minh tổng quát. Mã 08–12 là bản gốc, chưa dùng suy luận theo cụm.
-# pci-informal-charges-causal-ml

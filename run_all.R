@@ -6,5 +6,5 @@ for (f in c("13_clustered_inference.R",
 
             "16_panel_fe_clustered_tables.R", "17_wild_bootstrap_cre_dml.R", "14a_fd_dml_robust.R", "15_interaction_period.R",
             "14b_bootstrap_cate_B1000.R",
-            "18_monte_carlo.R"))   # 18 chạy ~15 phút   # 14b chạy lâu (~10-20 phút/2 lõi)
+            "18_monte_carlo.R", "20_harmonized_lagged.R"))   # 20 cần panel_with_indicators.csv (tạo bằng 19_extract_indicators.py)   # 18 chạy ~15 phút   # 14b chạy lâu (~10-20 phút/2 lõi)
   source(file.path("../R", f), echo = FALSE)
