@@ -1,0 +1,62 @@
+
+
+
+
+=== (A) Panel FE: SE theo cụm tỉnh (CSTP5) ===
+  Estimate Std. Error    t value   Pr(>|t|) 
+0.01902010 0.01027552 1.85101087 0.06498011 
+
+--- Placebo Panel FE (cụm tỉnh) ---
+   Estimate  Std. Error     t value    Pr(>|t|) 
+0.006213954 0.011298099 0.549999983 0.582727265 
+
+=== (B) Causal Forest (clusters = tỉnh) ===
+ATE:
+   estimate     std.err 
+0.040373171 0.008993092 
+Calibration:
+
+Best linear fit using forest predictions (on held-out data)
+as well as the mean forest prediction as regressors, along
+with one-sided heteroskedasticity-robust (HC3) SEs:
+
+                               Estimate Std. Error t value    Pr(>t)    
+mean.forest.prediction          0.95143    0.24354  3.9067 5.416e-05 ***
+differential.forest.prediction -1.38970    1.19695 -1.1610    0.8769    
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+
+
+--- Placebo Causal Forest (clusters = tỉnh) ---
+ATE:
+  estimate    std.err 
+0.02680440 0.01119373 
+Calibration:
+
+Best linear fit using forest predictions (on held-out data)
+as well as the mean forest prediction as regressors, along
+with one-sided heteroskedasticity-robust (HC3) SEs:
+
+                               Estimate Std. Error t value   Pr(>t)   
+mean.forest.prediction          1.04734    0.44381  2.3599 0.009396 **
+differential.forest.prediction  1.31996    0.58898  2.2411 0.012802 * 
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+
+
+=== (C) FE-DML (fold theo tỉnh, SE theo cụm tỉnh) ===
+   Estimate  Std. Error     t value    Pr(>|t|) 
+0.025505357 0.009994864 2.551846331 0.011053190 
+
+--- Placebo FE-DML ---
+   Estimate  Std. Error     t value    Pr(>|t|) 
+0.005529286 0.011503902 0.480644362 0.631048818 
+
+=== (D) FE-DML qua 20 seed khác nhau (ước lượng điểm và p-value) ===
+    Estimate          Pr(>|t|)       
+ Min.   :0.02302   Min.   :0.006429  
+ 1st Qu.:0.02428   1st Qu.:0.009177  
+ Median :0.02496   Median :0.012646  
+ Mean   :0.02501   Mean   :0.013175  
+ 3rd Qu.:0.02594   3rd Qu.:0.015769  
+ Max.   :0.02688   Max.   :0.023085  

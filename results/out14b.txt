@@ -1,0 +1,16 @@
+done 100 / 1000 
+done 200 / 1000 
+done 300 / 1000 
+done 400 / 1000 
+done 500 / 1000 
+done 600 / 1000 
+done 700 / 1000 
+done 800 / 1000 
+done 900 / 1000 
+done 1000 / 1000 
+sig riêng lẻ: 61 / 63 
+sup-t critical: 2.584 ; sig đồng thời: 29 / 63 
+SD CATE giữa các tỉnh (điểm): 0.0025 ; SD bootstrap trung bình mỗi tỉnh: 0.0091 
+CATE trung bình bootstrap (ATE) mean/sd: 0.023 0.0086 
+Tỉ lệ SD_giữa_tỉnh / SD_bootstrap_trung_bình: 0.27 
+Khoảng CATE (min, max): 0.0168 0.0289 

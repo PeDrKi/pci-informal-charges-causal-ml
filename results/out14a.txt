@@ -1,0 +1,89 @@
+
+
+
+
+Loading required package: Matrix
+Loaded glmnet 4.1-8
+##### 1. ƯỚC LƯỢNG CHÍNH: FE-DML (demeaning) vs FD-DML (sai phân) #####
+FE-DML rf (demean), K=5, seed 42               est=  0.0257  se= 0.0099  p= 0.010
+FD-DML rf (sai phân + khử năm), K=5        est=  0.0231  se= 0.0120  p= 0.056  n=378
+FD-OLS (sai phân + khử năm, tuyến tính) est=  0.0172  se= 0.0141  p= 0.224  n=378
+FD-DML qua 20 seed: est min/med/max = 0.0204 0.0242 0.0231 ; p min/med/max = 0.048 0.092 0.055 
+FE-DML qua 20 seed: est min/med/max = 0.0236 0.0285 0.0257 ; p min/med/max = 0.003 0.018 0.009 
+
+##### 2. PLACEBO NHIỀU LAG: CSTP5(t) với outcome(t-k), k=1,2,3 #####
+Panel FE placebo lag 1 (n=378)                 est=  0.0062  se= 0.0113  p= 0.583  n=378
+FE-DML placebo lag 1                           est=  0.0061  se= 0.0116  p= 0.600  n=378
+Panel FE placebo lag 2 (n=315)                 est= -0.0232  se= 0.0132  p= 0.080  n=315
+FE-DML placebo lag 2                           est= -0.0252  se= 0.0121  p= 0.037  n=315
+Panel FE placebo lag 3 (n=252)                 est=  0.0014  se= 0.0140  p= 0.923  n=252
+FE-DML placebo lag 3                           est=  0.0055  se= 0.0123  p= 0.654  n=252
+-- Placebo ở dạng sai phân: ΔCSTP5(t) với ΔY(t-1) --
+FD-DML placebo (ΔW_t vs ΔY_{t-1})            est= -0.0046  se= 0.0126  p= 0.718  n=315
+FD-OLS placebo                                 est=  0.0023  se= 0.0135  p= 0.863  n=315
+-- Lead/lag treatment: Y(t) ~ CSTP5(t) + CSTP5(t-1) (FE-DML trên mẫu có lag) --
+
+t test of coefficients:
+
+            Estimate Std. Error t value Pr(>|t|)  
+(Intercept)  -0.0003     0.0003 -0.7455   0.4564  
+Wr            0.0267     0.0117  2.2843   0.0229 *
+W1r           0.0089     0.0101  0.8806   0.3791  
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+
+
+##### 3. ĐỘ VỮNG TRỰC TIẾP CHO FE-DML (và FD-DML) #####
+Tên tỉnh có Hà Nội/HCM: Hà Nội TP.HCM 
+FE-DML loại Hà Nội & TP.HCM               est=  0.0271  se= 0.0102  p= 0.008
+FD-DML loại Hà Nội & TP.HCM               est=  0.0235  se= 0.0124  p= 0.058  n=366
+FE-DML learner = lm                            est=  0.0198  se= 0.0101  p= 0.052
+FD-DML learner = lm                            est=  0.0214  se= 0.0143  p= 0.136  n=378
+FE-DML learner = enet                          est=  0.0200  se= 0.0101  p= 0.049
+FD-DML learner = enet                          est=  0.0213  se= 0.0142  p= 0.134  n=378
+FE-DML learner = gbm                           est=  0.0213  se= 0.0092  p= 0.021
+FD-DML learner = gbm                           est=  0.0271  se= 0.0121  p= 0.026  n=378
+FE-DML K=10                                    est=  0.0257  se= 0.0100  p= 0.011
+FD-DML K=10                                    est=  0.0239  se= 0.0122  p= 0.051  n=378
+FE-DML K=3                                     est=  0.0262  se= 0.0101  p= 0.010
+-- Bỏ từng biến kiểm soát (FE-DML) --
+FE-DML bỏ CSTP1                              est=  0.0250  se= 0.0098  p= 0.011
+FE-DML bỏ CSTP2                              est=  0.0268  se= 0.0099  p= 0.007
+FE-DML bỏ CSTP3                              est=  0.0238  se= 0.0102  p= 0.020
+FE-DML bỏ CSTP4                              est=  0.0296  se= 0.0094  p= 0.002
+FE-DML bỏ CSTP6                              est=  0.0254  se= 0.0099  p= 0.010
+FE-DML bỏ CSTP8                              est=  0.0254  se= 0.0099  p= 0.011
+FE-DML bỏ CSTP9                              est=  0.0237  se= 0.0101  p= 0.020
+FE-DML bỏ CSTP10                             est=  0.0302  se= 0.0096  p= 0.002
+FE-DML không biến kiểm soát nào (chỉ phần dư trên 1 cột hằng) est=  0.0335  se= 0.0088  p= 0.000
+-- Theo giai đoạn --
+FE-DML 2018-2021                               est=  0.0158  se= 0.0109  p= 0.149
+FE-DML 2022-2024                               est=  0.0827  se= 0.0264  p= 0.002
+FD-DML 2018-2021                               est=  0.0191  se= 0.0098  p= 0.054  n=189
+FD-DML 2022-2024                               est=  0.0679  se= 0.0272  p= 0.014  n=126
+-- Bỏ từng năm --
+FE-DML bỏ năm 2018                          est=  0.0277  se= 0.0118  p= 0.019
+FE-DML bỏ năm 2019                          est=  0.0245  se= 0.0124  p= 0.048
+FE-DML bỏ năm 2020                          est=  0.0229  se= 0.0106  p= 0.031
+FE-DML bỏ năm 2021                          est=  0.0375  se= 0.0104  p= 0.000
+FE-DML bỏ năm 2022                          est=  0.0205  se= 0.0107  p= 0.056
+FE-DML bỏ năm 2023                          est=  0.0297  se= 0.0104  p= 0.004
+FE-DML bỏ năm 2024                          est=  0.0185  se= 0.0107  p= 0.084
+-- Leave-one-province-out (FE-DML, 63 lần) --
+Ước lượng min/max: 0.0218 0.0302 ; p max: 0.023 ; số lần p<0.05: 63 /63
+Tỉnh làm ước lượng thấp nhất/cao nhất: Điện Biên Khánh Hòa 
+
+##### 4. CSTP5 VÀ OUTCOME THEO NĂM (tính so sánh PCI) #####
+ year  n CSTP5_mean CSTP5_sd CSTP5_p10 CSTP5_med CSTP5_p90 Y_mean  Y_sd
+ 2018 63      6.005    0.777     4.893     6.037     7.067  0.465 0.070
+ 2019 63      6.241    0.706     5.569     6.203     7.092  0.534 0.075
+ 2020 63      6.591    0.648     5.871     6.619     7.464  0.503 0.088
+ 2021 63      6.987    0.703     6.039     7.060     7.834  0.600 0.086
+ 2022 63      7.010    0.493     6.440     6.981     7.677  0.632 0.109
+ 2023 63      7.083    0.340     6.691     7.053     7.533  0.581 0.095
+ 2024 63      6.774    0.424     6.262     6.778     7.297  0.520 0.104
+-- Chuẩn hóa z-score CSTP5 và outcome trong từng năm (loại bỏ khác biệt thang đo giữa năm) --
+FE-DML với biến z-score theo năm (hệ số theo SD) est=  0.1890  se= 0.0655  p= 0.004
+-- CSTP5 sd within-tỉnh theo năm: tương quan CSTP5 giữa các năm liền kề --
+[1] 0.561 0.629 0.528 0.541 0.497 0.500
+Tự tương quan lag-1 trong tỉnh (sau khử FE) của CSTP5: 0.114 

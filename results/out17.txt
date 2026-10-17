@@ -1,0 +1,20 @@
+Loading required package: zoo
+
+Attaching package: 'zoo'
+
+The following objects are masked from 'package:base':
+
+    as.Date, as.Date.numeric
+
+Panel FE (trên dữ liệu đã khử FE): beta = 0.019  t = 1.836 
+Wild cluster bootstrap-t p-value (2 phía, B = 9999): 0.0773 
+CI 95% theo phân vị |t*| của wild bootstrap (xấp xỉ): [ -0.0022 , 0.0402 ]; giá trị tới hạn 2.048 
+
+CRE-DML (Mundlak), seed 42:
+  Estimate Std. Error   Pr(>|t|) 
+    0.0423     0.0090     0.0000 
+20 seed: hệ số min/median/max: 0.0401 0.045 0.043 ; p min/median/max: 0 0 0 
+
+Placebo CRE-DML (outcome năm t-1 với CSTP5 năm t):
+  Estimate Std. Error   Pr(>|t|) 
+    0.0223     0.0106     0.0352 
