@@ -5,7 +5,7 @@ Mã và dữ liệu đã xử lý đi kèm bài báo gửi Tạp chí Kinh tế 
 ## Dữ liệu
 - `data_processed/pci_panel_final.csv`: bảng cân bằng 63 tỉnh × 2018–2024 (441 quan sát) lập từ các tệp PCI công khai (VCCI & USAID, https://pcivietnam.vn). Outcome: `attitude_positive` (tỷ lệ doanh nghiệp đánh giá thái độ chính quyền tỉnh là tích cực); treatment: `CSTP5`; kiểm soát: CSTP1–4, 6, 8–10.
 - `data_processed/pci_panel_placebo.csv`: cùng dữ liệu, ghép CSTP5(t) với outcome(t−1).
-- Dữ liệu thô không được phân phối lại; tải trực tiếp từ nguồn. `docs/pci_provenance_template.csv` là bảng đối chiếu nguồn theo năm, **cần điền** (tệp, câu hỏi, mẫu số, cách tính CSTP5, thay đổi đo lường).
+- Dữ liệu thô không được phân phối lại; tải trực tiếp từ nguồn. `docs/pci_provenance_template.csv` là bảng đối chiếu nguồn theo năm (tệp, URL, ngày tải 17/10/2026, định nghĩa outcome, cách tính CSTP5, thay đổi đo lường); các mục nhà phát hành không công bố (nguyên văn câu hỏi, mẫu số, n theo tỉnh) được ghi rõ là không có.
 
 ## Môi trường
 R ≥ 4.3; `plm`, `grf` 2.6.1, `sandwich`, `lmtest`, `glmnet`, `gbm`. Nên dùng `renv::init()` rồi `renv::snapshot()` để khóa phiên bản (chưa tạo `renv.lock`).
@@ -16,19 +16,19 @@ Các script `00`–`12` là bản gốc (suy luận **không** theo cụm tỉnh
 | Script | Nội dung | Bảng/mục trong bài |
 |---|---|---|
 | `00_xu_ly_du_lieu.R` | ghép tệp PCI thô thành panel | Mục 3.4 |
-| `13_clustered_inference.R` | Panel FE (SE cụm), Causal Forest (clusters), FE-DML (fold theo tỉnh, SE cụm), placebo một độ trễ | Bảng 4 (hệ số CSTP5), 5, 6 |
-| `14a_fd_dml_robust.R` | FD-DML, placebo nhiều độ trễ, độ vững riêng cho FE-DML, thống kê PCI theo năm | Bảng 7, 9; Mục 3.4 |
-| `14b_bootstrap_cate_B1000.R` | bootstrap CATE B = 1.000, dải sup-t | Mục 4.4 |
-| `15_interaction_period.R` | kiểm định trực tiếp chênh lệch giữa hai giai đoạn | Mục 4.5 |
-| `02c.R`, `03c.R`, `10c.R`, `11c.R` | biến thể có `clusters` của 02, 03, 10, 11 (CF tiêu chuẩn, treatment CSTP3, FE-Causal Forest theo vùng, minh họa quy mô) | Mục 4.2, 4.4, 4.5 |
-| `16_panel_fe_clustered_tables.R` | Bảng 4 đầy đủ và Bảng 7 (Panel FE) | Bảng 3; độ vững Panel FE trong Mục 4.5 |
-| `17_wild_bootstrap_cre_dml.R` | wild cluster bootstrap-t (B = 9.999) và CRE-DML | Mục 4.1, 4.5 |
-| `18_monte_carlo.R` | Monte Carlo 200 lần lặp (biến `MC_REPS`; ~15 phút/2 lõi) | Mục 4.5 (văn bản) |
+| `13_clustered_inference.R` | Panel FE (SE cụm), Causal Forest (clusters), FE-DML (fold theo tỉnh, SE cụm), placebo một độ trễ | Bảng 3 (hệ số CSTP5), Bảng 4 |
+| `14a_fd_dml_robust.R` | FD-DML, placebo nhiều độ trễ, độ vững riêng cho FE-DML, thống kê PCI theo năm | Bảng 4 (placebo); Mục 3.4, 4.3–4.4 (văn bản) |
+| `14b_bootstrap_cate_B1000.R` | bootstrap CATE B = 1.000, dải sup-t | Mục 4.2 |
+| `15_interaction_period.R` | kiểm định trực tiếp chênh lệch giữa hai giai đoạn | Mục 4.4 |
+| `02c.R`, `03c.R`, `10c.R`, `11c.R` | biến thể có `clusters` của 02, 03, 10, 11 (CF tiêu chuẩn, treatment CSTP3, FE-Causal Forest theo vùng, minh họa quy mô) | Mục 4.2–4.4 |
+| `16_panel_fe_clustered_tables.R` | Bảng 3 đầy đủ và độ vững Panel FE | Bảng 3; Mục 4.4 |
+| `17_wild_bootstrap_cre_dml.R` | wild cluster bootstrap-t (B = 9.999) và CRE-DML | Mục 4.1, 4.4 |
+| `18_monte_carlo.R` | Monte Carlo 200 lần lặp (biến `MC_REPS`; ~15 phút/2 lõi) | Mục 3.3, 4.4 (văn bản) |
 | `19_extract_indicators.py` | trích 9 chỉ tiêu CSTP5 chung cả 7 năm từ sheet "Chi phí không chính thức" (cần file Excel PCI; kết quả: `data_processed/panel_with_indicators.csv`) | Bảng 5 |
 | `20_harmonized_lagged.R` | Panel FE với CSTP5 hài hòa và CSTP5 trễ một năm (wild bootstrap B = 4.999) | Bảng 5 |
 | `01`, `04`–`07`, `08`–`09`, `12` | bản gốc không theo cụm (Panel FE đầy đủ hệ số, loại HN/HCM, LOPO, cluster bootstrap, Oster δ, FE-DML gốc, bootstrap B = 200) | tham khảo |
 
-`16_panel_fe_clustered_tables.R` tái tạo Bảng 3 (Panel FE đầy đủ, SE theo cụm tỉnh) và các kiểm định độ vững ở Mục 4.5 (loại HN/HCM, LOPO, cluster bootstrap B = 500, Oster δ); kết quả khớp bài (`results/out16.txt`).
+`16_panel_fe_clustered_tables.R` tái tạo Bảng 3 (Panel FE đầy đủ, SE theo cụm tỉnh) và các kiểm định độ vững ở Mục 4.4 (loại HN/HCM, LOPO, cluster bootstrap B = 500, Oster δ); kết quả khớp bài (`results/out16.txt`).
 
 `results/out13.txt`, `out14a.txt`, `out14b.txt`, `out16.txt`, `out17.txt`, `out18.txt`, `out20.txt` và `bootstrap_cate_ci_B1000.csv` là kết quả chạy đã dùng trong bài.
 
